@@ -2,7 +2,7 @@ package br.com.api.treino.casadocodigo.gateway.database;
 
 import br.com.api.treino.casadocodigo.gateway.database.model.CategoriaDatabase;
 import br.com.api.treino.casadocodigo.gateway.database.repository.CategoriaRepository;
-import br.com.api.treino.casadocodigo.gateway.exception.CadastraNovaCategoriaGatewayException;
+import br.com.api.treino.casadocodigo.gateway.exception.GatewayException;
 import br.com.api.treino.casadocodigo.model.CategoriaDomain;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,7 +37,7 @@ class CadastraNovaCategoriaGatewayImplTest {
     }
 
     @Test
-    void deveCadastrarNovaCategoriaComRetornoDeSucesso() throws CadastraNovaCategoriaGatewayException {
+    void deveCadastrarNovaCategoriaComRetornoDeSucesso() throws GatewayException {
 
         when(repository.save(any())).thenReturn(categoriaDatabase);
 
@@ -64,12 +64,12 @@ class CadastraNovaCategoriaGatewayImplTest {
     @Test
     void deveRetornarCadastraNovaCategoriaGatewayException(){
 
-        when(repository.save(any())).thenThrow(new CadastraNovaCategoriaGatewayException("[GATEWAY] - Problema ao cadastrar nova categoria", new Exception()));
+        when(repository.save(any())).thenThrow(new GatewayException("[GATEWAY] - Problema ao cadastrar nova categoria", new Exception()));
 
         try {
             gateway.cadastra(categoriaDomain);
         }catch (Exception e) {
-            assertEquals(CadastraNovaCategoriaGatewayException.class, e.getClass());
+            assertEquals(GatewayException.class, e.getClass());
             assertEquals("[GATEWAY] - Problema ao cadastrar nova categoria", e.getMessage());
         }
     }

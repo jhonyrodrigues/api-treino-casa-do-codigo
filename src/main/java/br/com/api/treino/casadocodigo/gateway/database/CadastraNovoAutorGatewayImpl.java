@@ -3,7 +3,7 @@ package br.com.api.treino.casadocodigo.gateway.database;
 import br.com.api.treino.casadocodigo.gateway.CadastraNovoAutorGateway;
 import br.com.api.treino.casadocodigo.gateway.database.model.AutorDatabase;
 import br.com.api.treino.casadocodigo.gateway.database.repository.AutorRepository;
-import br.com.api.treino.casadocodigo.gateway.exception.CadastraNovoAutorGatewayException;
+import br.com.api.treino.casadocodigo.gateway.exception.GatewayException;
 import br.com.api.treino.casadocodigo.model.AutorDomain;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -17,7 +17,7 @@ public class CadastraNovoAutorGatewayImpl implements CadastraNovoAutorGateway {
     private final AutorRepository autorRepository;
 
     @Override
-    public AutorDomain cadastra(AutorDomain autorDomain) throws CadastraNovoAutorGatewayException {
+    public AutorDomain cadastra(AutorDomain autorDomain) throws GatewayException {
         try {
             AutorDatabase autorDatabase = autorRepository.save(AutorDatabase.builder().nome(autorDomain.getNome()).email(autorDomain.getEmail()).descricao(autorDomain.getDescricao())
                     .registradoEm(autorDomain.getRegistradoEm()).build());
@@ -27,7 +27,7 @@ public class CadastraNovoAutorGatewayImpl implements CadastraNovoAutorGateway {
         } catch (DataIntegrityViolationException e) {
             throw new DuplicateKeyException("[GATEWAY] - E-mail cadastrado!");
         } catch (Exception e) {
-            throw new CadastraNovoAutorGatewayException("[GATEWAY] - Problema ao cadastrar novo autor", e);
+            throw new GatewayException("[GATEWAY] - Problema ao cadastrar novo autor", e);
         }
     }
 }

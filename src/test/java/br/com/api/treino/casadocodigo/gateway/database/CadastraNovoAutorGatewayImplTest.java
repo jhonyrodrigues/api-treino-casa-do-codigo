@@ -2,7 +2,7 @@ package br.com.api.treino.casadocodigo.gateway.database;
 
 import br.com.api.treino.casadocodigo.gateway.database.model.AutorDatabase;
 import br.com.api.treino.casadocodigo.gateway.database.repository.AutorRepository;
-import br.com.api.treino.casadocodigo.gateway.exception.CadastraNovoAutorGatewayException;
+import br.com.api.treino.casadocodigo.gateway.exception.GatewayException;
 import br.com.api.treino.casadocodigo.model.AutorDomain;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,7 +41,7 @@ class CadastraNovoAutorGatewayImplTest {
     }
 
     @Test
-    void deveCadastrarNovoAutorComRetornoDeSucesso() throws CadastraNovoAutorGatewayException {
+    void deveCadastrarNovoAutorComRetornoDeSucesso() throws GatewayException {
 
         when(repository.save(any())).thenReturn(autorDatabase);
 
@@ -68,14 +68,14 @@ class CadastraNovoAutorGatewayImplTest {
     }
 
     @Test
-    void deveRetornarCadastraNovoAutorGatewayException() throws CadastraNovoAutorGatewayException {
+    void deveRetornarCadastraNovoAutorGatewayException() throws GatewayException {
 
-        when(repository.save(any())).thenThrow(new CadastraNovoAutorGatewayException("[GATEWAY] - Problema ao cadastrar novo autor", new Exception()));
+        when(repository.save(any())).thenThrow(new GatewayException("[GATEWAY] - Problema ao cadastrar novo autor", new Exception()));
 
         try {
             gateway.cadastra(autorDomain);
         }catch (Exception e) {
-            assertEquals(CadastraNovoAutorGatewayException.class, e.getClass());
+            assertEquals(GatewayException.class, e.getClass());
             assertEquals("[GATEWAY] - Problema ao cadastrar novo autor", e.getMessage());
         }
     }

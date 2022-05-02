@@ -3,7 +3,7 @@ package br.com.api.treino.casadocodigo.gateway.database;
 import br.com.api.treino.casadocodigo.gateway.CadastraNovaCategoriaGateway;
 import br.com.api.treino.casadocodigo.gateway.database.model.CategoriaDatabase;
 import br.com.api.treino.casadocodigo.gateway.database.repository.CategoriaRepository;
-import br.com.api.treino.casadocodigo.gateway.exception.CadastraNovaCategoriaGatewayException;
+import br.com.api.treino.casadocodigo.gateway.exception.GatewayException;
 import br.com.api.treino.casadocodigo.model.CategoriaDomain;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -17,7 +17,7 @@ public class CadastraNovaCategoriaGatewayImpl implements CadastraNovaCategoriaGa
     private final CategoriaRepository categoriaRepository;
 
     @Override
-    public CategoriaDomain cadastra(CategoriaDomain categoriaDomain) throws CadastraNovaCategoriaGatewayException {
+    public CategoriaDomain cadastra(CategoriaDomain categoriaDomain) throws GatewayException {
         try {
             CategoriaDatabase categoriaDatabase = categoriaRepository.save(CategoriaDatabase.builder().categoria(categoriaDomain.getCategoria()).build());
 
@@ -26,7 +26,7 @@ public class CadastraNovaCategoriaGatewayImpl implements CadastraNovaCategoriaGa
         } catch (DataIntegrityViolationException e) {
             throw new DuplicateKeyException("[GATEWAY] - Categoria já foi cadastrada!");
         } catch (Exception e) {
-            throw new CadastraNovaCategoriaGatewayException("[GATEWAY] - Problema ao cadastrar nova categoria", e);
+            throw new GatewayException("[GATEWAY] - Problema ao cadastrar nova categoria", e);
         }
     }
 }

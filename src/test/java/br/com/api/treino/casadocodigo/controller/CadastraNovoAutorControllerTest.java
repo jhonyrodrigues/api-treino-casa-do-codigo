@@ -2,7 +2,7 @@ package br.com.api.treino.casadocodigo.controller;
 
 import br.com.api.treino.casadocodigo.controller.model.CadastraNovoAutorRequest;
 import br.com.api.treino.casadocodigo.controller.model.CadastraNovoAutorResponse;
-import br.com.api.treino.casadocodigo.gateway.exception.CadastraNovoAutorGatewayException;
+import br.com.api.treino.casadocodigo.gateway.exception.GatewayException;
 import br.com.api.treino.casadocodigo.useCase.CadastraNovoAutorUseCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,7 +37,7 @@ class CadastraNovoAutorControllerTest {
     }
 
     @Test
-    void deveCadastrarNovoAutorComRetornoCreated() throws CadastraNovoAutorGatewayException {
+    void deveCadastrarNovoAutorComRetornoCreated() throws GatewayException {
 
         when(useCase.cadastra(any())).thenReturn(autorResponse);
 
