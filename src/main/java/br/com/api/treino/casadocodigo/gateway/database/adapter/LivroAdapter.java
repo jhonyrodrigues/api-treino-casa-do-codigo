@@ -2,6 +2,7 @@ package br.com.api.treino.casadocodigo.gateway.database.adapter;
 
 import br.com.api.treino.casadocodigo.controller.model.CadastraNovoLivroRequest;
 import br.com.api.treino.casadocodigo.controller.model.CadastraNovoLivroResponse;
+import br.com.api.treino.casadocodigo.controller.model.ListaLivrosCadastradosResponse;
 import br.com.api.treino.casadocodigo.gateway.database.model.AutorDatabase;
 import br.com.api.treino.casadocodigo.gateway.database.model.CategoriaDatabase;
 import br.com.api.treino.casadocodigo.gateway.database.model.LivroDatabase;
@@ -38,5 +39,9 @@ public class LivroAdapter {
     public CadastraNovoLivroResponse converteLivroDomainParaLivroResponse(LivroDomain livroDomain) {
         return CadastraNovoLivroResponse.builder().titulo(livroDomain.getTitulo()).autor(livroDomain.getAutor().getNome())
                 .dataLancamento(livroDomain.getDataLancamento()).build();
+    }
+
+    public ListaLivrosCadastradosResponse converteLivroDomainParaListaDeLivrosCadastradosResponse(LivroDomain livroDomain) {
+        return ListaLivrosCadastradosResponse.builder().id(livroDomain.getId()).titulo(livroDomain.getTitulo()).build();
     }
 }
