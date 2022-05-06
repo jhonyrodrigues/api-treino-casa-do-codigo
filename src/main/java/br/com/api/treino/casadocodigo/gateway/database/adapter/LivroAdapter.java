@@ -2,6 +2,7 @@ package br.com.api.treino.casadocodigo.gateway.database.adapter;
 
 import br.com.api.treino.casadocodigo.controller.model.CadastraNovoLivroRequest;
 import br.com.api.treino.casadocodigo.controller.model.CadastraNovoLivroResponse;
+import br.com.api.treino.casadocodigo.controller.model.DetalhaInformacoesLivroResponse;
 import br.com.api.treino.casadocodigo.controller.model.ListaLivrosCadastradosResponse;
 import br.com.api.treino.casadocodigo.gateway.database.model.AutorDatabase;
 import br.com.api.treino.casadocodigo.gateway.database.model.CategoriaDatabase;
@@ -43,5 +44,13 @@ public class LivroAdapter {
 
     public ListaLivrosCadastradosResponse converteLivroDomainParaListaDeLivrosCadastradosResponse(LivroDomain livroDomain) {
         return ListaLivrosCadastradosResponse.builder().id(livroDomain.getId()).titulo(livroDomain.getTitulo()).build();
+    }
+
+    public DetalhaInformacoesLivroResponse converteLivroDomainParaDetalhaInformacoesLivroResponse(LivroDomain livroDomain) {
+        return DetalhaInformacoesLivroResponse.builder().titulo(livroDomain.getTitulo()).preco(livroDomain.getPreco())
+                .resumo(livroDomain.getResumo()).sumario(livroDomain.getSumario()).nomeAutor(livroDomain.getAutor().getNome())
+                .descricaoAutor(livroDomain.getAutor().getDescricao()).paginas(livroDomain.getPaginas())
+                .isbn(livroDomain.getIsbn()).dataPublicacao(livroDomain.getDataLancamento())
+                .build();
     }
 }
